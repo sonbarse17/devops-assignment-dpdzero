@@ -3,6 +3,7 @@ version: '3.8'
 services:
   service_1:
     build: ./service_1
+    image: service1
     networks:
       - app-network
     healthcheck:
@@ -13,6 +14,7 @@ services:
 
   service_2:
     build: ./service_2
+    image: service2
     networks:
       - app-network
     healthcheck:
