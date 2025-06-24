@@ -1,40 +1,43 @@
 # DevOps Assignment - Nginx Reverse Proxy with Docker
 
-This project demonstrates a containerized microservices architecture with Nginx reverse proxy routing traffic to two backend services.
-
-## Architecture
-
-- **Service 1**: Go API (port 8001)
-- **Service 2**: Python Flask API (port 8002)  
-- **Nginx**: Reverse proxy routing requests based on URL paths
+Containerized microservices with Nginx reverse proxy routing.
 
 ## Setup Instructions
 
 1. Clone the repository
-2. Run the entire system:
+2. Run the system:
    ```bash
    docker-compose up --build
    ```
+3. Test endpoints:
+   ```bash
+   ./test.sh
+   ```
 
-## Routing
+## How Routing Works
 
-The Nginx reverse proxy routes requests as follows:
+Nginx reverse proxy routes based on URL paths:
+- `/service1/*` → Go API (service_1:8001)
+- `/service2/*` → Python Flask API (service_2:8002)
 
-- `http://localhost:8080/service1/*` → Service 1 (Go API)
-- `http://localhost:8080/service2/*` → Service 2 (Python Flask API)
+**Test URLs:**
+- `http://localhost:8080/service1/ping`
+- `http://localhost:8080/service1/hello`
+- `http://localhost:8080/service2/ping`
+- `http://localhost:8080/service2/hello`
 
-## Test Endpoints
+## Bonus Features Implemented
 
-- `http://localhost:8080/service1/ping` - Health check for Service 1
-- `http://localhost:8080/service1/hello` - Greeting from Service 1
-- `http://localhost:8080/service2/ping` - Health check for Service 2
-- `http://localhost:8080/service2/hello` - Greeting from Service 2
+### ✅ Logging Clarity
+- Custom Nginx log format with timestamps, status codes, and response times
+- Logs show: `timestamp [status] method path -> upstream (response_time)`
 
-## Features Implemented
+### ✅ Clean & Modular Docker Setup
+- Minimal Dockerfiles with single responsibility
+- Proper service separation and networking
+- Health check dependencies
 
-- ✅ Docker containerization for all services
-- ✅ Nginx reverse proxy with path-based routing
-- ✅ Health checks for both backend services
-- ✅ Request logging with timestamps
-- ✅ Bridge networking between containers
-- ✅ Single port exposure (8080) to host
+### ✅ Health Checks & Automated Testing
+- Docker health checks for both services
+- Nginx waits for healthy services before starting
+- Automated test script (`test.sh`) validates all endpoints
